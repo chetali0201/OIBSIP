@@ -115,8 +115,5 @@ A single `click` listener on the button grid reads `data-action` and `data-value
 5. **Bracket support** — Allow expressions like `(3 + 2) × 4`.
 6. **Smooth digit transitions** — CSS transitions on the display when the result updates.
 7. **Scientific mode** — Toggle to reveal √, x², sin, cos, log.
-8. **Error shake animation** — Subtle shake on the display for invalid input.
-
----
-
-*A Level 2 internship project — focused on clean code, not complexity.*
+LIVE DEMO
+https://chetali0201.github.io/OIBSIP/calculator//
