@@ -67,6 +67,3 @@ The Google Fonts (`Lora` + `Inter`) load from the CDN — an internet connection
 
 ---
 
-## Image Credit
-
-Photo of A. P. J. Abdul Kalam via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A._P._J._Abdul_Kalam.jpg) — Public Domain.
