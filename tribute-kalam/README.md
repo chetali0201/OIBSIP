@@ -65,5 +65,8 @@ Open `index.html` directly in a browser. No build step, no server required.
 
 The Google Fonts (`Lora` + `Inter`) load from the CDN — an internet connection is needed for them to render correctly. Without it, the page falls back to Georgia and system-ui.
 
+LIVE DEMO
+https://chetali0201.github.io/OIBSIP/tribute-kalam/
+
 ---
 
