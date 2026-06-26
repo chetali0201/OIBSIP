@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Oasis Auth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="blob-container" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-wrapper">
+    <div class="auth-card" role="main">
+
+      <!-- Brand -->
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">🔐</div>
+        <div class="brand-title">Oasis Auth</div>
+        <div class="brand-subtitle">Oasis Infobyte — Web Dev Internship</div>
+      </div>
+
+      <!-- Alert (for error/success messages) -->
+      <div class="alert alert-error" id="loginAlert" role="alert" aria-live="polite">
+        <span class="alert-icon" aria-hidden="true">⚠️</span>
+        <span class="alert-message" id="loginAlertMsg">Something went wrong.</span>
+      </div>
+
+      <!-- Form heading -->
+      <h1 class="form-heading">Welcome back!</h1>
+      <p class="form-subheading">Sign in to continue to your dashboard.</p>
+
+      <!-- Login Form -->
+      <form id="loginForm" novalidate>
+
+        <!-- Username / Email Field -->
+        <div class="form-group">
+          <label class="form-label" for="loginIdentifier">Username or Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">👤</span>
+            <input
+              type="text"
+              id="loginIdentifier"
+              class="form-input"
+              placeholder="Enter your username or email"
+              autocomplete="username"
+              required
+            />
+          </div>
+          <p class="field-hint error" id="identifierHint"></p>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <div class="input-wrapper has-toggle">
+            <span class="input-icon" aria-hidden="true">🔑</span>
+            <input
+              type="password"
+              id="loginPassword"
+              class="form-input"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="toggleLoginPw"
+              aria-label="Show or hide password"
+            >👁️</button>
+          </div>
+          <p class="field-hint error" id="passwordHint"></p>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-spinner" aria-hidden="true">
+            <span class="spinner-ring"></span>
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Page Switch -->
+      <div class="page-switch">
+        Don't have an account? <a href="register.html">Create one — it's free!</a>
+      </div>
+
+    </div>
+
+    <p class="footer-note">Passwords secured with SHA-256 hashing · Never stored in plain text</p>
+  </div>
+
+  <!-- Auth JS -->
+  <script src="auth.js"></script>
+  <script>
+    // ─────────────────────────────────────────
+    // Login Page Script
+    // ─────────────────────────────────────────
+
+    // If already logged in, send straight to dashboard
+    (function checkExistingSession() {
+      if (getSession()) {
+        window.location.href = "dashboard.html";
+      }
+    })();
+
+    // DOM references
+    const loginForm       = document.getElementById("loginForm");
+    const loginBtn        = document.getElementById("loginBtn");
+    const loginAlert      = document.getElementById("loginAlert");
+    const loginAlertMsg   = document.getElementById("loginAlertMsg");
+    const identifierInput = document.getElementById("loginIdentifier");
+    const passwordInput   = document.getElementById("loginPassword");
+    const identifierHint  = document.getElementById("identifierHint");
+    const passwordHint    = document.getElementById("passwordHint");
+    const togglePwBtn     = document.getElementById("toggleLoginPw");
+
+    // ── Show / hide the alert banner ──────────
+    function showAlert(message, type = "error") {
+      loginAlert.className = `alert alert-${type} show`;
+      loginAlertMsg.textContent = message;
+    }
+
+    function hideAlert() {
+      loginAlert.classList.remove("show");
+    }
+
+    // ── Inline field hint helpers ─────────────
+    function showHint(el, message, type = "error") {
+      el.textContent = message;
+      el.className = `field-hint ${type} show`;
+    }
+
+    function clearHint(el) {
+      el.textContent = "";
+      el.className = "field-hint";
+    }
+
+    // ── Toggle password visibility ─────────────
+    togglePwBtn.addEventListener("click", function () {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      this.textContent  = isPassword ? "🙈" : "👁️";
+      this.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+    });
+
+    // ── Clear hints on input ───────────────────
+    identifierInput.addEventListener("input", function () {
+      clearHint(identifierHint);
+      hideAlert();
+    });
+
+    passwordInput.addEventListener("input", function () {
+      clearHint(passwordHint);
+      hideAlert();
+    });
+
+    // ── Form Submission ────────────────────────
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Clear previous feedback
+      hideAlert();
+      clearHint(identifierHint);
+      clearHint(passwordHint);
+
+      const identifier = identifierInput.value.trim();
+      const password   = passwordInput.value;
+
+      // Client-side empty checks (fast feedback before async)
+      let hasError = false;
+
+      if (!identifier) {
+        showHint(identifierHint, "Please enter your username or email.");
+        hasError = true;
+      }
+
+      if (!password) {
+        showHint(passwordHint, "Please enter your password.");
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Show loading state
+      loginBtn.disabled = true;
+      loginBtn.classList.add("loading");
+
+      try {
+        const result = await loginUser(identifier, password);
+
+        if (result.success) {
+          showAlert("Logged in! Taking you to your dashboard… 🎉", "success");
+          loginAlert.className = loginAlert.className.replace("alert-error", "alert-success");
+          // Small delay so the user sees the success message
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 900);
+        } else {
+          showAlert(result.message, "error");
+          loginBtn.disabled = false;
+          loginBtn.classList.remove("loading");
+        }
+      } catch (err) {
+        showAlert("Something went wrong. Please try again.", "error");
+        loginBtn.disabled = false;
+        loginBtn.classList.remove("loading");
+        console.error("Login error:", err);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,671 @@
+/* ================================================
+   Tribute Page — Dr. APJ Abdul Kalam
+   style.css
+   Author: Chetali Kumbhare
+   ================================================
+
+   TABLE OF CONTENTS
+   1. CSS Variables (design tokens)
+   2. Reset & Base
+   3. Navigation
+   4. Hero Section
+   5. Biography Section
+   6. Timeline Section
+   7. Quote Section
+   8. Why I Chose Him Section
+   9. Footer
+   10. Utility Classes
+   11. Responsive (Tablet & Mobile)
+*/
+
+
+/* ================================================
+   1. CSS VARIABLES
+   Central place to change colors, fonts, spacing
+   ================================================ */
+:root {
+  /* Colors */
+  --clr-bg-light:      #fafaf8;   /* off-white — warmer than pure white */
+  --clr-bg-dark:       #1c1c1c;   /* near-black for dark sections */
+  --clr-bg-card:       #ffffff;
+  --clr-bg-quote:      #f3f0eb;   /* warm cream */
+  --clr-bg-why:        #f7f7f5;
+
+  --clr-accent:        #7c5c38;   /* warm amber-brown — earthy, not neon */
+  --clr-accent-light:  #c9a97a;   /* lighter version for timeline dots */
+  --clr-text-dark:     #1a1a1a;
+  --clr-text-body:     #3e3e3e;
+  --clr-text-muted:    #888;
+  --clr-text-light:    #e8e4de;   /* text on dark backgrounds */
+  --clr-border:        #e5e0d8;
+
+  /* Typography */
+  --font-serif:        'Lora', Georgia, serif;
+  --font-sans:         'Inter', system-ui, sans-serif;
+
+  /* Spacing */
+  --section-padding:   80px 0;
+  --container-width:   860px;
+
+  /* Shadows */
+  --shadow-card:       0 2px 16px rgba(0,0,0,0.07);
+  --shadow-card-hover: 0 6px 24px rgba(0,0,0,0.12);
+}
+
+
+/* ================================================
+   2. RESET & BASE STYLES
+   ================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Enables smooth scrolling for anchor links */
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--clr-bg-light);
+  color: var(--clr-text-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--clr-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================================
+   3. NAVIGATION
+   ================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--clr-bg-dark);
+  border-bottom: 1px solid #333;
+}
+
+.nav-inner {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Site name in nav */
+.nav-name {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--clr-text-light);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Nav link list */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--clr-accent-light);
+  text-decoration: none;
+}
+
+/* Hamburger button (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+
+/* ================================================
+   4. HERO SECTION
+   ================================================ */
+.hero {
+  background-color: var(--clr-bg-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px 72px;
+  gap: 28px;
+  text-align: center;
+}
+
+/* Portrait photo — using a placeholder silhouette for reliability.
+   Replace the background-image URL with a real photo if hosting locally. */
+.hero-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid var(--clr-accent);
+
+  /*
+    Using a real, public-domain Wikimedia photo.
+    If this fails due to CORS/hosting, swap for a local image:
+    background-image: url('images/kalam.jpg');
+  */
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/A._P._J._Abdul_Kalam.jpg/440px-A._P._J._Abdul_Kalam.jpg');
+  background-size: cover;
+  background-position: center top;
+
+  /* Subtle inner shadow for polish */
+  box-shadow: 0 0 0 6px rgba(124, 92, 56, 0.2);
+  flex-shrink: 0;
+}
+
+/* Caption below the photo */
+.hero-caption {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  max-width: 320px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.hero-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* "A Tribute to" label above the name */
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--clr-accent-light);
+  margin-bottom: 6px;
+}
+
+/* Main hero name */
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 6vw, 58px); /* scales with viewport */
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.hero-dates {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* Tagline beneath the name */
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--clr-text-light);
+  max-width: 500px;
+  margin-top: 6px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+
+/* ================================================
+   5. BIOGRAPHY SECTION  (light background)
+   ================================================ */
+.section {
+  padding: var(--section-padding);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.bio-section {
+  background-color: var(--clr-bg-light);
+}
+
+/* Section heading style (used across sections) */
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--clr-text-dark);
+  margin-bottom: 8px;
+}
+
+.section-title.light {
+  color: #f0ebe3;
+}
+
+/* Decorative underline beneath section titles */
+.title-underline {
+  width: 48px;
+  height: 3px;
+  background-color: var(--clr-accent);
+  margin-bottom: 40px;
+  border-radius: 2px;
+}
+
+.title-underline.light {
+  background-color: var(--clr-accent-light);
+}
+
+/* Two-column layout: text + sidebar */
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Biography paragraphs */
+.bio-text p {
+  font-size: 16px;
+  color: var(--clr-text-body);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.bio-text p:last-child {
+  margin-bottom: 0;
+}
+
+.bio-text em {
+  font-style: italic;
+  color: var(--clr-text-dark);
+}
+
+/* Sidebar "Quick Facts" box */
+.bio-sidebar {
+  background-color: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.sidebar-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--clr-text-dark);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.fact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fact-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fact-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-accent);
+}
+
+.fact-list li span:last-child {
+  font-size: 13.5px;
+  color: var(--clr-text-body);
+}
+
+
+/* ================================================
+   6. TIMELINE SECTION  (dark background)
+   ================================================ */
+.timeline-section {
+  background-color: var(--clr-bg-dark);
+}
+
+.timeline {
+  position: relative;
+  margin-top: 8px;
+}
+
+/* The vertical line running through the timeline */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #333;
+}
+
+/* Each event row */
+.timeline-item {
+  position: relative;
+  padding-left: 52px;
+  margin-bottom: 32px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Dot on the timeline line */
+.timeline-dot {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--clr-accent);
+  border: 3px solid var(--clr-bg-dark);
+  box-shadow: 0 0 0 2px var(--clr-accent);
+  z-index: 1;
+}
+
+/* Timeline card */
+.timeline-card {
+  background-color: #262626;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 20px 22px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.timeline-card:hover {
+  border-color: #4a4a4a;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.timeline-year {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--clr-accent-light);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.timeline-card h3 {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: #f0ebe3;
+  margin-bottom: 8px;
+}
+
+.timeline-card p {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.7;
+}
+
+
+/* ================================================
+   7. QUOTE SECTION  (cream background)
+   ================================================ */
+.quote-section {
+  background-color: var(--clr-bg-quote);
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.quote-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* The big decorative opening quote mark */
+.quote-mark {
+  font-family: var(--font-serif);
+  font-size: 120px;
+  line-height: 0.6;
+  color: var(--clr-accent);
+  opacity: 0.2;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--clr-text-dark);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.quote-attr {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-accent);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.quote-context {
+  font-size: 13px;
+  color: var(--clr-text-muted);
+}
+
+
+/* ================================================
+   8. "WHY I CHOSE HIM" SECTION
+   ================================================ */
+.why-section {
+  background-color: var(--clr-bg-why);
+}
+
+.why-container {
+  max-width: 680px; /* narrower — feels more personal and letter-like */
+}
+
+.why-text p {
+  font-size: 16px;
+  color: var(--clr-text-body);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.why-text p:last-child {
+  margin-bottom: 0;
+}
+
+.why-text em {
+  font-style: italic;
+  color: var(--clr-text-dark);
+}
+
+
+/* ================================================
+   9. FOOTER
+   ================================================ */
+.footer {
+  background-color: var(--clr-bg-dark);
+  padding: 48px 24px;
+  text-align: center;
+  border-top: 1px solid #2a2a2a;
+}
+
+.footer-tribute {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-style: italic;
+  color: #c9b99a;
+  margin-bottom: 16px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.footer-credit {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.footer-credit strong {
+  color: #aaa;
+}
+
+.footer-note {
+  font-size: 11px;
+  color: #444;
+}
+
+
+/* ================================================
+   10. UTILITY
+   ================================================ */
+
+/* Smooth link focus for accessibility */
+a:focus-visible {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+
+/* ================================================
+   11. RESPONSIVE — Tablet & Mobile
+   ================================================ */
+
+/* Tablet: collapse biography sidebar below text */
+@media (max-width: 720px) {
+
+  .bio-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .bio-sidebar {
+    /* Show sidebar below text on tablet */
+    order: 2;
+  }
+
+}
+
+
+/* Mobile: under 540px */
+@media (max-width: 540px) {
+
+  /* ── Nav: show hamburger, hide links ── */
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 56px;     /* height of nav */
+    left: 0;
+    right: 0;
+    background-color: var(--clr-bg-dark);
+    border-top: 1px solid #333;
+    z-index: 99;
+  }
+
+  /* JS adds .open to show the menu */
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 14px;
+    border-bottom: 1px solid #252525;
+    color: #aaa;
+  }
+
+  /* ── Hero adjustments ── */
+  .hero {
+    padding: 48px 20px 56px;
+  }
+
+  .hero-photo {
+    width: 160px;
+    height: 160px;
+  }
+
+  /* ── Section spacing ── */
+  .section {
+    padding: 56px 0;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  /* ── Timeline: line moves closer to edge ── */
+  .timeline::before {
+    left: 12px;
+  }
+
+  .timeline-item {
+    padding-left: 40px;
+  }
+
+  .timeline-dot {
+    left: 4px;
+  }
+
+  /* ── Quote: smaller on mobile ── */
+  .quote-mark {
+    font-size: 80px;
+  }
+
+}

@@ -1,0 +1,757 @@
+/*
+  style.css — Main Stylesheet
+  Oasis Infobyte Web Development Internship — Level 2
+  Login Authentication System
+
+  Design: Deep navy + violet glassmorphism with floating blob animations.
+  Font: Poppins via Google Fonts
+*/
+
+/* ─────────────────────────────────────────────
+   Google Fonts Import
+───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ─────────────────────────────────────────────
+   CSS Custom Properties (Design Tokens)
+───────────────────────────────────────────── */
+:root {
+  --color-bg-start: #0f172a;
+  --color-bg-end: #1e1b4b;
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-light: #a5b4fc;
+  --color-accent: #c4b5fd;
+  --color-white: #ffffff;
+  --color-text-main: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-error: #f87171;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+
+  --card-radius: 20px;
+  --input-radius: 10px;
+  --btn-radius: 10px;
+
+  --font-family: 'Poppins', sans-serif;
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.35s ease;
+}
+
+/* ─────────────────────────────────────────────
+   Reset & Base
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+  min-height: 100vh;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   Animated Background Blobs
+   (the "handcrafted" signature element — soft,
+   organic shapes that breathe behind the card)
+───────────────────────────────────────────── */
+.blob-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  animation: floatBlob 12s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #6366f1, #4f46e5);
+  top: -120px;
+  left: -100px;
+  animation-duration: 14s;
+}
+
+.blob-2 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, #8b5cf6, #7c3aed);
+  bottom: -80px;
+  right: -80px;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+.blob-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, #c4b5fd, #a78bfa);
+  top: 50%;
+  right: 10%;
+  animation-duration: 16s;
+  animation-delay: -7s;
+}
+
+@keyframes floatBlob {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(20px, -30px) scale(1.05); }
+  66%  { transform: translate(-15px, 20px) scale(0.95); }
+  100% { transform: translate(10px, -10px) scale(1.02); }
+}
+
+/* ─────────────────────────────────────────────
+   Page Layout Wrapper
+───────────────────────────────────────────── */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px 16px;
+  margin: auto;
+}
+
+/* ─────────────────────────────────────────────
+   Glass Card
+───────────────────────────────────────────── */
+.auth-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 40px 36px;
+  animation: cardIn 0.5s ease both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Branding / Logo Area
+───────────────────────────────────────────── */
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  border-radius: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+  font-size: 26px;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────
+   Form Heading
+───────────────────────────────────────────── */
+.form-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 6px;
+}
+
+.form-subheading {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 26px;
+}
+
+/* ─────────────────────────────────────────────
+   Form Groups & Inputs
+───────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: 7px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: color var(--transition-fast);
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--input-radius);
+  color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  padding: 12px 14px 12px 42px;
+  outline: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input::placeholder {
+  color: rgba(148, 163, 184, 0.5);
+  font-size: 0.875rem;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  background: rgba(99, 102, 241, 0.08);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.form-input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--color-primary-light);
+}
+
+/* ─────────────────────────────────────────────
+   Toggle Password Visibility Button
+───────────────────────────────────────────── */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password:hover {
+  color: var(--color-primary-light);
+}
+
+/* For inputs with toggle button, adjust padding */
+.has-toggle .form-input {
+  padding-right: 42px;
+}
+
+/* ─────────────────────────────────────────────
+   Validation Messages
+───────────────────────────────────────────── */
+.field-hint {
+  font-size: 0.75rem;
+  margin-top: 6px;
+  padding: 0 2px;
+  display: none;
+}
+
+.field-hint.show {
+  display: block;
+}
+
+.field-hint.error {
+  color: var(--color-error);
+}
+
+.field-hint.success {
+  color: var(--color-success);
+}
+
+/* ─────────────────────────────────────────────
+   Password Strength Indicator
+───────────────────────────────────────────── */
+.password-rules {
+  margin-top: 8px;
+  display: none;
+  gap: 6px;
+  flex-direction: column;
+}
+
+.password-rules.show {
+  display: flex;
+}
+
+.rule-item {
+  font-size: 0.73rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition-fast);
+}
+
+.rule-item::before {
+  content: '○';
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+.rule-item.pass {
+  color: var(--color-success);
+}
+
+.rule-item.pass::before {
+  content: '●';
+}
+
+/* ─────────────────────────────────────────────
+   Alert / Flash Messages
+───────────────────────────────────────────── */
+.alert {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  animation: alertIn 0.3s ease both;
+}
+
+.alert.show {
+  display: flex;
+}
+
+@keyframes alertIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.alert.alert-error {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: var(--color-error);
+}
+
+.alert.alert-success {
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: var(--color-success);
+}
+
+/* ─────────────────────────────────────────────
+   Submit Button
+───────────────────────────────────────────── */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+  border: none;
+  border-radius: var(--btn-radius);
+  color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 13px;
+  cursor: pointer;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.35);
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(99, 102, 241, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button loading state */
+.btn-primary .btn-text { transition: opacity var(--transition-fast); }
+.btn-primary .btn-spinner {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-primary.loading .btn-text { opacity: 0; }
+.btn-primary.loading .btn-spinner { display: block; }
+
+.spinner-ring {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────
+   Page Switch Link
+───────────────────────────────────────────── */
+.page-switch {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.page-switch a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.page-switch a:hover {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────
+   Divider
+───────────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* ─────────────────────────────────────────────
+   Dashboard Styles
+───────────────────────────────────────────── */
+
+/* Dashboard uses a wider layout */
+.dashboard-wrapper {
+  z-index: 1;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding: 24px 16px;
+  margin: auto;
+}
+
+.dashboard-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 40px 44px;
+  animation: cardIn 0.5s ease both;
+}
+
+/* Dashboard Header */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 36px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dash-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-brand-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+  flex-shrink: 0;
+}
+
+.dash-brand-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.dash-brand-sub {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* Logout button */
+.btn-logout {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  border-radius: 8px;
+  color: var(--color-error);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-logout:hover {
+  background: rgba(248, 113, 113, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(248, 113, 113, 0.2);
+}
+
+/* Welcome section */
+.welcome-section {
+  margin-bottom: 36px;
+}
+
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  color: var(--color-primary-light);
+  font-weight: 500;
+  margin-bottom: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.welcome-heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--color-white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.welcome-heading span {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Info cards grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.info-tile {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.info-tile:hover {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px);
+}
+
+.tile-icon {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.tile-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.tile-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-white);
+  word-break: break-word;
+}
+
+/* Notice / tip section */
+.dash-notice {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.notice-icon {
+  font-size: 1.1rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.notice-text {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.notice-text strong {
+  color: var(--color-primary-light);
+}
+
+/* ─────────────────────────────────────────────
+   Footer note
+───────────────────────────────────────────── */
+.footer-note {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.4);
+  margin-top: 24px;
+}
+
+/* ─────────────────────────────────────────────
+   Responsive Adjustments
+───────────────────────────────────────────── */
+@media (max-width: 500px) {
+  .auth-card {
+    padding: 32px 24px;
+  }
+
+  .dashboard-card {
+    padding: 28px 22px;
+  }
+
+  .welcome-heading {
+    font-size: 1.5rem;
+  }
+
+  .dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-card {
+    padding: 28px 18px;
+  }
+
+  .form-input {
+    font-size: 0.82rem;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Reduced Motion Support
+───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+  .auth-card, .dashboard-card { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}

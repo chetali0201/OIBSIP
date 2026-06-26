@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Oasis Auth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="blob-container" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-wrapper">
+    <div class="dashboard-card" role="main">
+
+      <!-- Dashboard Header -->
+      <div class="dash-header">
+        <div class="dash-brand">
+          <div class="dash-brand-icon" aria-hidden="true">🔐</div>
+          <div>
+            <div class="dash-brand-text">Oasis Auth</div>
+            <div class="dash-brand-sub">Oasis Infobyte — Web Dev Internship</div>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="btn-logout" id="logoutBtn" type="button" aria-label="Log out of your account">
+          <span aria-hidden="true">🚪</span> Log Out
+        </button>
+      </div>
+
+      <!-- Welcome Section -->
+      <div class="welcome-section">
+        <div class="welcome-badge" aria-label="Status: Authenticated">
+          <span aria-hidden="true">✅</span> Authenticated
+        </div>
+
+        <h1 class="welcome-heading">
+          Hey, <span id="displayUsername">there</span>! 👋
+        </h1>
+
+        <p class="welcome-desc">
+          You're now logged in. This is your protected dashboard — only accessible
+          when you're signed in. Your password was securely hashed with SHA-256
+          and is never stored in plain text.
+        </p>
+      </div>
+
+      <!-- Info Tiles -->
+      <div class="info-grid" role="list" aria-label="Account information">
+
+        <div class="info-tile" role="listitem">
+          <div class="tile-icon" aria-hidden="true">👤</div>
+          <div class="tile-label">Username</div>
+          <div class="tile-value" id="tileUsername">—</div>
+        </div>
+
+        <div class="info-tile" role="listitem">
+          <div class="tile-icon" aria-hidden="true">🕐</div>
+          <div class="tile-label">Logged In At</div>
+          <div class="tile-value" id="tileLoginTime">—</div>
+        </div>
+
+        <div class="info-tile" role="listitem">
+          <div class="tile-icon" aria-hidden="true">🛡️</div>
+          <div class="tile-label">Auth Method</div>
+          <div class="tile-value">SHA-256 Hash</div>
+        </div>
+
+        <div class="info-tile" role="listitem">
+          <div class="tile-icon" aria-hidden="true">💾</div>
+          <div class="tile-label">Storage</div>
+          <div class="tile-value">localStorage</div>
+        </div>
+
+      </div>
+
+      <!-- Notice -->
+      <div class="dash-notice">
+        <div class="notice-icon" aria-hidden="true">💡</div>
+        <p class="notice-text">
+          <strong>Internship Project Note:</strong> This is a front-end only authentication demo
+          built for the Oasis Infobyte Web Development Level 2 task. In a real-world app,
+          authentication would be handled server-side with secure session tokens, HTTPS, and
+          a proper database — never localStorage.
+        </p>
+      </div>
+
+    </div>
+
+    <p class="footer-note">Passwords secured with SHA-256 hashing · Never stored in plain text</p>
+  </div>
+
+  <!-- Auth JS -->
+  <script src="auth.js"></script>
+  <script>
+    // ─────────────────────────────────────────
+    // Dashboard Page Script
+    // ─────────────────────────────────────────
+
+    // ── Auth Guard: redirect if not logged in ──
+    requireAuth(); // Defined in auth.js — redirects to index.html if no session
+
+    // ── Populate the dashboard with session data ──
+    (function loadDashboard() {
+      const session = getSession();
+
+      if (!session) return; // requireAuth handles this, but safety first
+
+      // Update welcome heading
+      document.getElementById("displayUsername").textContent = session.username;
+
+      // Tile: username
+      document.getElementById("tileUsername").textContent = session.username;
+
+      // Tile: login time — formatted nicely
+      const loginDate = new Date(session.loggedInAt);
+      const formattedTime = loginDate.toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+      document.getElementById("tileLoginTime").textContent = formattedTime;
+
+      // Update page title with username
+      document.title = `${session.username}'s Dashboard — Oasis Auth`;
+    })();
+
+    // ── Logout Button ─────────────────────────
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", function () {
+      // Optional: a tiny visual delay before redirecting
+      this.textContent = "Logging out…";
+      this.disabled    = true;
+
+      setTimeout(() => {
+        logoutUser(); // Defined in auth.js — clears session + redirects
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>

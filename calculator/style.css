@@ -1,0 +1,322 @@
+/* =========================================
+   Calculator — style.css
+   Author: Chetali Kumbhare
+   ========================================= */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Design Tokens --- */
+:root {
+  --bg-page:        #f0f0f0;
+  --bg-calc:        #ffffff;
+  --bg-display:     #1e1e2e;
+  --bg-history:     #f7f7f9;
+  --bg-btn-number:  #ffffff;
+  --bg-btn-operator:#eef0fb;
+  --bg-btn-utility: #fef3f2;
+  --bg-btn-equals:  #3a3af4;
+
+  --text-display:   #ffffff;
+  --text-expression:#a0a0b8;
+  --text-number:    #1e1e2e;
+  --text-operator:  #3a3af4;
+  --text-utility:   #d04040;
+  --text-equals:    #ffffff;
+  --text-muted:     #9090a0;
+  --text-footer:    #888;
+
+  --shadow-calc:    0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-btn:     0 2px 6px rgba(0,0,0,0.07);
+  --shadow-btn-hover: 0 4px 12px rgba(0,0,0,0.13);
+
+  --radius-calc:    20px;
+  --radius-btn:     12px;
+  --radius-display: 14px;
+
+  --font-main:      'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono:      'Courier New', 'Lucida Console', monospace;
+
+  --transition:     0.15s ease;
+}
+
+/* --- Page wrapper: starts invisible, fades in via JS --- */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-page);
+  padding: 24px 16px;
+  font-family: var(--font-main);
+
+  /* Initial hidden state for load animation */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* JS adds this class to trigger the fade-in */
+.page-wrapper.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Calculator Card --- */
+.calculator-container {
+  background: var(--bg-calc);
+  border-radius: var(--radius-calc);
+  box-shadow: var(--shadow-calc);
+  padding: 28px 24px 20px;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* --- App Title --- */
+.app-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* --- Display Area --- */
+.display-wrapper {
+  background: var(--bg-display);
+  border-radius: var(--radius-display);
+  padding: 16px 20px 14px;
+  margin-bottom: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+/* The expression line (what the user is typing) */
+.expression {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text-display);
+  word-break: break-all;
+  text-align: right;
+  line-height: 1.3;
+  /* Prevent text overflow for very long expressions */
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* The result preview line (smaller, dimmer) */
+.result {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text-expression);
+  text-align: right;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+/* --- History Panel --- */
+.history-panel {
+  background: var(--bg-history);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  min-height: 56px;
+}
+
+.history-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.history-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.history-list li {
+  font-size: 12px;
+  color: #555;
+  font-family: var(--font-mono);
+  text-align: right;
+  /* Slightly fade older entries */
+  opacity: 0.9;
+}
+
+/* The most recent entry is slightly bolder */
+.history-list li:first-child {
+  color: #222;
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* --- Button Grid --- */
+.button-grid {
+  display: grid;
+  /* 4 equal columns */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* --- Base Button Styles --- */
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-main);
+  font-size: 18px;
+  font-weight: 500;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-btn);
+  transition:
+    background-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  /* Prevent text selection on rapid clicks */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover {
+  box-shadow: var(--shadow-btn-hover);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-btn);
+}
+
+/* Focus ring for keyboard users */
+.btn:focus-visible {
+  outline: 2px solid var(--bg-btn-equals);
+  outline-offset: 2px;
+}
+
+/* --- Button Variants --- */
+.btn-number {
+  background: var(--bg-btn-number);
+  color: var(--text-number);
+  border: 1px solid #ececec;
+}
+
+.btn-number:hover {
+  background: #f5f5f5;
+}
+
+.btn-operator {
+  background: var(--bg-btn-operator);
+  color: var(--text-operator);
+  font-size: 20px;
+}
+
+.btn-operator:hover {
+  background: #e4e6fc;
+}
+
+/* Active/selected operator gets a highlighted look */
+.btn-operator.active {
+  background: var(--bg-btn-equals);
+  color: white;
+}
+
+.btn-utility {
+  background: var(--bg-btn-utility);
+  color: var(--text-utility);
+  font-size: 15px;
+}
+
+.btn-utility:hover {
+  background: #fde8e7;
+}
+
+/* C button spans 2 columns */
+.btn-wide {
+  grid-column: span 2;
+}
+
+/* Zero button spans 2 columns */
+.btn-zero {
+  grid-column: span 2;
+  justify-content: flex-start;
+  padding-left: 22px;
+}
+
+.btn-equals {
+  background: var(--bg-btn-equals);
+  color: var(--text-equals);
+  font-size: 22px;
+}
+
+.btn-equals:hover {
+  background: #2a2ae0;
+}
+
+/* --- Keyboard Hint --- */
+.keyboard-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* --- Footer --- */
+.site-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-footer);
+  text-align: center;
+}
+
+.site-footer span {
+  font-weight: 600;
+  color: #555;
+}
+
+/* --- Responsive: Small phones --- */
+@media (max-width: 380px) {
+  .calculator-container {
+    padding: 20px 16px 16px;
+  }
+
+  .btn {
+    height: 54px;
+    font-size: 16px;
+  }
+
+  .expression {
+    font-size: 22px;
+  }
+
+  .button-grid {
+    gap: 8px;
+  }
+}

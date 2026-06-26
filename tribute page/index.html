@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Tribute to Dr. APJ Abdul Kalam</title>
+
+  <!--
+    Google Fonts:
+    - Lora       → Serif headings (warm, academic, dignified)
+    - Inter      → Sans-serif body (clean, readable)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =============================================
+       NAV — sticky top bar with anchor links
+  ============================================= -->
+  <nav class="nav" id="navbar">
+    <div class="nav-inner">
+      <span class="nav-name">Dr. APJ Abdul Kalam</span>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#biography">Biography</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#quote">Quote</a></li>
+        <li><a href="#why">Why Him</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       HERO — full-height opening section
+  ============================================= -->
+  <section class="hero" id="home">
+
+    <!-- The actual image is placed via CSS background on .hero-photo.
+         Using a reliable Wikipedia Wikimedia image of Kalam.
+         If this ever breaks, replace the URL in style.css -->
+    <div class="hero-photo" role="img" aria-label="Portrait of Dr. APJ Abdul Kalam"></div>
+
+    <figure class="hero-card">
+      <figcaption class="hero-caption">Dr. Kalam during his presidential years — a scientist who never stopped being a teacher.</figcaption>
+    </figure>
+
+    <div class="hero-text">
+      <p class="hero-eyebrow">A Tribute to</p>
+      <h1 class="hero-name">Dr. APJ Abdul Kalam</h1>
+      <p class="hero-dates">15 October 1931 — 27 July 2015</p>
+      <p class="hero-tagline">Scientist. President. Dreamer.<br/>The man who taught a nation to aim for the stars.</p>
+    </div>
+
+  </section>
+
+  <!-- =============================================
+       BIOGRAPHY — light background section
+  ============================================= -->
+  <section class="section bio-section" id="biography">
+    <div class="container">
+
+      <h2 class="section-title">A Life Worth Knowing</h2>
+      <div class="title-underline"></div>
+
+      <div class="bio-grid">
+
+        <div class="bio-text">
+
+          <p>
+            Avul Pakir Jainulabdeen Abdul Kalam was born in Rameswaram, a small island town in Tamil Nadu, into a modest family.
+            His father was a boat owner who ferried Hindu pilgrims across to Dhanushkodi. There wasn't much money,
+            but there was a lot of discipline and a deep sense of community. Kalam delivered newspapers in the morning
+            to help pay for his own education. He'd talk about those years not with bitterness, but with something
+            closer to gratitude — like difficulty had done him a favour.
+          </p>
+
+          <p>
+            He trained as an aerospace engineer at MIT Chennai and later joined ISRO and then DRDO, where he spent decades
+            working on India's space and missile programmes. He was the project director for India's first
+            Satellite Launch Vehicle — SLV-III — which successfully deployed the Rohini satellite in 1980.
+            Later, he led the development of the Agni and Prithvi missiles under India's Integrated Guided Missile
+            Development Programme. Colleagues described him as the kind of person who stayed late not because he
+            had to, but because he genuinely could not imagine being anywhere else.
+          </p>
+
+          <p>
+            What made Kalam unusual among scientists of his generation was how much time he spent with young people.
+            He gave lectures at colleges, replied to student letters, and later wrote several books aimed not at
+            researchers but at teenagers trying to figure out what they wanted from life. <em>Wings of Fire</em>,
+            his autobiography, has sold millions of copies and is still assigned reading in schools across India.
+            It reads less like a career retrospective and more like a long conversation with someone who genuinely
+            believed in you.
+          </p>
+
+          <p>
+            He served as India's 11th President from 2002 to 2007 — a role he is said to have accepted with
+            some reluctance, not out of lack of patriotism but because he wasn't sure a President could do
+            more good than a scientist. He was wrong, or at least, he was different kinds of right. He used the
+            position to visit remote schools, meet children in hospitals, and push for science education in places
+            that had been left behind. When his term ended, he went back to teaching. He died on 27 July 2015,
+            mid-lecture, at IIM Shillong. There are worse ways to go.
+          </p>
+
+        </div>
+
+        <!-- Side facts panel -->
+        <aside class="bio-sidebar">
+          <h3 class="sidebar-title">Quick Facts</h3>
+          <ul class="fact-list">
+            <li><span class="fact-label">Born</span><span>15 October 1931, Rameswaram</span></li>
+            <li><span class="fact-label">Field</span><span>Aerospace Engineering, Physics</span></li>
+            <li><span class="fact-label">Known for</span><span>SLV-III, IGMDP, Agni missile</span></li>
+            <li><span class="fact-label">President</span><span>2002 – 2007 (11th of India)</span></li>
+            <li><span class="fact-label">Highest award</span><span>Bharat Ratna, 1997</span></li>
+            <li><span class="fact-label">Nickname</span><span>Missile Man of India</span></li>
+            <li><span class="fact-label">Books</span><span>Wings of Fire, Ignited Minds, and 20+ others</span></li>
+          </ul>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       TIMELINE — darker background section
+  ============================================= -->
+  <section class="section timeline-section" id="timeline">
+    <div class="container">
+
+      <h2 class="section-title light">Milestones</h2>
+      <div class="title-underline light"></div>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1931</span>
+            <h3>Born in Rameswaram</h3>
+            <p>Born to a modest family in a small town in Tamil Nadu. Delivered newspapers as a child to fund his education — a detail he never forgot.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1958</span>
+            <h3>Joins DRDO</h3>
+            <p>After graduating from MIT Chennai, Kalam joins the Defence Research and Development Organisation as a scientist. His career in aerospace begins here.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1969</span>
+            <h3>Moves to ISRO</h3>
+            <p>Transfers to the Indian Space Research Organisation and is appointed as project director for India's first Satellite Launch Vehicle — SLV-III.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1980</span>
+            <h3>SLV-III Success</h3>
+            <p>The SLV-III rocket successfully places the Rohini satellite into orbit, making India one of a small number of countries with indigenous space launch capability.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1992</span>
+            <h3>Leads IGMDP</h3>
+            <p>Serves as chief of the Integrated Guided Missile Development Programme. Oversees the development of Agni and Prithvi missiles, earning him the "Missile Man" title.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1997</span>
+            <h3>Bharat Ratna</h3>
+            <p>Awarded India's highest civilian honour — the Bharat Ratna — in recognition of his contributions to science, defence research, and national development.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">1998</span>
+            <h3>Pokhran-II</h3>
+            <p>Plays a key role as Project Coordinator for India's second nuclear test, Operation Shakti. A defining moment in India's nuclear strategy.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2002</span>
+            <h3>Becomes President</h3>
+            <p>Elected as the 11th President of India. Known as the "People's President," he makes a point of meeting school children across the country throughout his term.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2007</span>
+            <h3>Returns to Teaching</h3>
+            <p>After his presidential term ends, he returns to academia — teaching at IIT, IIM, and universities across India — by choice, not obligation.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">2015</span>
+            <h3>Passes Away in Shillong</h3>
+            <p>Collapses mid-lecture at IIM Shillong on 27 July 2015. He was 83. The country mourned a man who seemed to have never fully retired from serving it.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       QUOTE — typographic centrepiece section
+  ============================================= -->
+  <section class="section quote-section" id="quote">
+    <div class="container">
+      <div class="quote-wrapper">
+        <span class="quote-mark">&ldquo;</span>
+        <blockquote class="quote-text">
+          You have to dream before your dreams can come true.
+        </blockquote>
+        <p class="quote-attr">— Dr. APJ Abdul Kalam</p>
+        <p class="quote-context">From <em>Wings of Fire</em>, his autobiography first published in 1999.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       WHY I CHOSE THIS PERSON — personal section
+  ============================================= -->
+  <section class="section why-section" id="why">
+    <div class="container why-container">
+      <h2 class="section-title">Why I Chose Him</h2>
+      <div class="title-underline"></div>
+
+      <div class="why-text">
+        <p>
+          Honestly? I chose Dr. Kalam because I grew up reading quotes attributed to him in school notebooks,
+          on classroom walls, on the backs of buses. For a long time I didn't know much beyond the quotes —
+          just that he was "the missile man" and that he'd been President once.
+        </p>
+        <p>
+          When I actually read <em>Wings of Fire</em>, I realised there was a real person behind all of it.
+          Someone who grew up without much, worked incredibly hard, and still found time to write letters
+          to students he'd never met. The part that stuck with me most wasn't any big achievement — it was
+          the fact that when his presidential term ended, he went back to teaching. He didn't have to.
+          He just wanted to.
+        </p>
+        <p>
+          I'm studying to build things on the internet. He built things that went into space and kept
+          a country safer. The scale is completely different. But something about his approach —
+          the curiosity, the patience, the idea that every student deserves your full attention —
+          feels like something worth carrying into any field.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-tribute">
+        "He never stopped being a student. That is the greatest thing a teacher can be."
+      </p>
+      <p class="footer-credit">
+        Tribute page built by <strong>Chetali Kumbhare</strong> &nbsp;·&nbsp; Web Development Internship, Level 2
+      </p>
+      <p class="footer-note">
+        All biographical content is written from memory and public record. Images sourced from Wikimedia Commons (public domain).
+      </p>
+    </div>
+  </footer>
+
+  <!-- Minimal JS: just the mobile nav toggle -->
+  <script>
+    // Toggle the mobile nav menu open/closed
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+
+    // Close menu when a link is tapped on mobile
+    links.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        links.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

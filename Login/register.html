@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Oasis Auth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="blob-container" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-wrapper">
+    <div class="auth-card" role="main">
+
+      <!-- Brand -->
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✨</div>
+        <div class="brand-title">Oasis Auth</div>
+        <div class="brand-subtitle">Oasis Infobyte — Web Dev Internship</div>
+      </div>
+
+      <!-- Alert Banner -->
+      <div class="alert alert-error" id="registerAlert" role="alert" aria-live="polite">
+        <span class="alert-icon" aria-hidden="true">⚠️</span>
+        <span class="alert-message" id="registerAlertMsg">Something went wrong.</span>
+      </div>
+
+      <!-- Form Heading -->
+      <h1 class="form-heading">Create an account</h1>
+      <p class="form-subheading">Takes about 30 seconds. Promise! 🙂</p>
+
+      <!-- Registration Form -->
+      <form id="registerForm" novalidate>
+
+        <!-- Username Field -->
+        <div class="form-group">
+          <label class="form-label" for="regUsername">Username</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">👤</span>
+            <input
+              type="text"
+              id="regUsername"
+              class="form-input"
+              placeholder="Pick a cool username"
+              autocomplete="username"
+              required
+            />
+          </div>
+          <p class="field-hint" id="usernameHint"></p>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Email Address</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">📧</span>
+            <input
+              type="email"
+              id="regEmail"
+              class="form-input"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <p class="field-hint" id="emailHint"></p>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Password</label>
+          <div class="input-wrapper has-toggle">
+            <span class="input-icon" aria-hidden="true">🔑</span>
+            <input
+              type="password"
+              id="regPassword"
+              class="form-input"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="toggleRegPw"
+              aria-label="Show or hide password"
+            >👁️</button>
+          </div>
+          <p class="field-hint" id="regPasswordHint"></p>
+
+          <!-- Live password rule checklist -->
+          <div class="password-rules" id="passwordRules" aria-label="Password requirements">
+            <div class="rule-item" id="ruleLength" aria-live="polite">At least 8 characters</div>
+            <div class="rule-item" id="ruleNumber" aria-live="polite">At least one number (0–9)</div>
+          </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label class="form-label" for="regConfirmPassword">Confirm Password</label>
+          <div class="input-wrapper has-toggle">
+            <span class="input-icon" aria-hidden="true">🔒</span>
+            <input
+              type="password"
+              id="regConfirmPassword"
+              class="form-input"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="toggleConfirmPw"
+              aria-label="Show or hide confirm password"
+            >👁️</button>
+          </div>
+          <p class="field-hint" id="confirmPasswordHint"></p>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary" id="registerBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-spinner" aria-hidden="true">
+            <span class="spinner-ring"></span>
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Page Switch -->
+      <div class="page-switch">
+        Already have an account? <a href="index.html">Sign in here</a>
+      </div>
+
+    </div>
+
+    <p class="footer-note">Passwords secured with SHA-256 hashing · Never stored in plain text</p>
+  </div>
+
+  <!-- Auth JS -->
+  <script src="auth.js"></script>
+  <script>
+    // ─────────────────────────────────────────
+    // Register Page Script
+    // ─────────────────────────────────────────
+
+    // If already logged in, skip registration
+    (function checkExistingSession() {
+      if (getSession()) {
+        window.location.href = "dashboard.html";
+      }
+    })();
+
+    // DOM References
+    const registerForm        = document.getElementById("registerForm");
+    const registerBtn         = document.getElementById("registerBtn");
+    const registerAlert       = document.getElementById("registerAlert");
+    const registerAlertMsg    = document.getElementById("registerAlertMsg");
+
+    const usernameInput       = document.getElementById("regUsername");
+    const emailInput          = document.getElementById("regEmail");
+    const passwordInput       = document.getElementById("regPassword");
+    const confirmPasswordInput= document.getElementById("regConfirmPassword");
+
+    const usernameHint        = document.getElementById("usernameHint");
+    const emailHint           = document.getElementById("emailHint");
+    const regPasswordHint     = document.getElementById("regPasswordHint");
+    const confirmPasswordHint = document.getElementById("confirmPasswordHint");
+
+    const passwordRules       = document.getElementById("passwordRules");
+    const ruleLength          = document.getElementById("ruleLength");
+    const ruleNumber          = document.getElementById("ruleNumber");
+
+    const toggleRegPwBtn      = document.getElementById("toggleRegPw");
+    const toggleConfirmPwBtn  = document.getElementById("toggleConfirmPw");
+
+    // ── Alert Helpers ─────────────────────────
+    function showAlert(message, type = "error") {
+      registerAlert.className = `alert alert-${type} show`;
+      registerAlertMsg.textContent = message;
+    }
+
+    function hideAlert() {
+      registerAlert.classList.remove("show");
+    }
+
+    // ── Field Hint Helpers ────────────────────
+    function showHint(el, message, type = "error") {
+      el.textContent = message;
+      el.className = `field-hint ${type} show`;
+    }
+
+    function clearHint(el) {
+      el.textContent = "";
+      el.className = "field-hint";
+    }
+
+    // ── Toggle Password Visibility ────────────
+    function setupToggle(buttonEl, inputEl) {
+      buttonEl.addEventListener("click", function () {
+        const isPassword = inputEl.type === "password";
+        inputEl.type     = isPassword ? "text" : "password";
+        this.textContent = isPassword ? "🙈" : "👁️";
+        this.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+      });
+    }
+
+    setupToggle(toggleRegPwBtn, passwordInput);
+    setupToggle(toggleConfirmPwBtn, confirmPasswordInput);
+
+    // ── Live Password Rule Checker ────────────
+    passwordInput.addEventListener("focus", function () {
+      passwordRules.classList.add("show");
+    });
+
+    passwordInput.addEventListener("input", function () {
+      const val = this.value;
+      clearHint(regPasswordHint);
+      hideAlert();
+
+      // Rule: minimum length
+      if (val.length >= 8) {
+        ruleLength.classList.add("pass");
+      } else {
+        ruleLength.classList.remove("pass");
+      }
+
+      // Rule: at least one number
+      if (/\d/.test(val)) {
+        ruleNumber.classList.add("pass");
+      } else {
+        ruleNumber.classList.remove("pass");
+      }
+
+      // If confirm field has a value already, re-check match
+      if (confirmPasswordInput.value) {
+        checkPasswordMatch();
+      }
+    });
+
+    // ── Confirm Password Match Checker ────────
+    function checkPasswordMatch() {
+      if (confirmPasswordInput.value && confirmPasswordInput.value !== passwordInput.value) {
+        showHint(confirmPasswordHint, "Passwords don't match yet.", "error");
+      } else if (confirmPasswordInput.value && confirmPasswordInput.value === passwordInput.value) {
+        showHint(confirmPasswordHint, "Passwords match ✓", "success");
+      } else {
+        clearHint(confirmPasswordHint);
+      }
+    }
+
+    confirmPasswordInput.addEventListener("input", function () {
+      hideAlert();
+      checkPasswordMatch();
+    });
+
+    // ── Clear hints on other fields ───────────
+    usernameInput.addEventListener("input", function () {
+      clearHint(usernameHint);
+      hideAlert();
+    });
+
+    emailInput.addEventListener("input", function () {
+      clearHint(emailHint);
+      hideAlert();
+    });
+
+    // ── Form Submission ────────────────────────
+    registerForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Clear all previous feedback
+      hideAlert();
+      clearHint(usernameHint);
+      clearHint(emailHint);
+      clearHint(regPasswordHint);
+      clearHint(confirmPasswordHint);
+
+      const username        = usernameInput.value.trim();
+      const email           = emailInput.value.trim();
+      const password        = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      // ── Client-side validation ──
+      let hasError = false;
+
+      if (!username) {
+        showHint(usernameHint, "Username can't be empty.");
+        hasError = true;
+      }
+
+      if (!email) {
+        showHint(emailHint, "Email address is required.");
+        hasError = true;
+      }
+
+      if (!password) {
+        showHint(regPasswordHint, "Please create a password.");
+        hasError = true;
+      }
+
+      if (!confirmPassword) {
+        showHint(confirmPasswordHint, "Please confirm your password.");
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Check passwords match before hashing
+      if (password !== confirmPassword) {
+        showHint(confirmPasswordHint, "Passwords don't match. Double-check and try again.");
+        return;
+      }
+
+      // Show loading state
+      registerBtn.disabled = true;
+      registerBtn.classList.add("loading");
+
+      try {
+        const result = await registerUser(username, email, password);
+
+        if (result.success) {
+          showAlert(result.message, "success");
+          // Redirect to login page after a moment
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1600);
+        } else {
+          showAlert(result.message, "error");
+          registerBtn.disabled = false;
+          registerBtn.classList.remove("loading");
+        }
+      } catch (err) {
+        showAlert("Something went wrong. Please try again.", "error");
+        registerBtn.disabled = false;
+        registerBtn.classList.remove("loading");
+        console.error("Registration error:", err);
+      }
+    });
+  </script>
+
+</body>
+</html>
