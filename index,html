@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OIBSIP Projects - Chetali Kumbhare</title>
+</head>
+<body>
+  <h1>OASIS INFOBYTE Projects</h1>
+  <ul>
+    <li><a href="./WebDev-L2-Calculator/">Calculator</a></li>
+    <li><a href="./WebDev-L2-TributePage/">Tribute Page</a></li>
+    <li><a href="./WebDev-L2-ToDoApp/">To-Do App</a></li>
+    <li><a href="./WebDev-L2-LoginAuthSystem/">Login Authentication System</a></li>
+  </ul>
+</body>
+</html>
